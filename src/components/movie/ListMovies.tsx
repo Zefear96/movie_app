@@ -1,12 +1,13 @@
 import React from "react";
-import { useGetMoviesQuery } from "../../api/movie/movieApi";
+import { useGetMoviesQuery } from "../../store/actions/movieActions";
 import CardMovie from "./CardMovie";
 import SpinnerDoubleThin from "../Spinner/SpinnerDoubleThin";
-import { Movie } from "../../utils/typesMovie";
+import { Movie } from "../../types/typesMovie";
+import useMovies from "../../hooks/useMovies";
 
 const ListMovies = () => {
-	const { data: movies, isError, isLoading, error } = useGetMoviesQuery();
-	console.log(movies);
+	const [data, { isLoading, isError }] = useMovies();
+	console.log(data);
 
 	if (isLoading) {
 		return <SpinnerDoubleThin />;
@@ -17,16 +18,17 @@ const ListMovies = () => {
 	}
 
 	return (
-		<div>
-			<h2>Movies</h2>
-			{movies ? (
-				movies.data.movies.map((movie: Movie) => (
-					<CardMovie key={movie.id} movie={movie} />
-				))
-			) : (
-				<h1>Empty</h1>
-			)}
-		</div>
+		<section className=" w-4/5 mx-auto my-5">
+			<div className=" grid grid-cols-5 gap-10 max-lg:grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1">
+				{data ? (
+					data.data.movies.map((movie: Movie) => (
+						<CardMovie key={movie.id} movie={movie} />
+					))
+				) : (
+					<h1>Empty</h1>
+				)}
+			</div>
+		</section>
 	);
 };
 

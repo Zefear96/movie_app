@@ -1,8 +1,8 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
-import { userApi } from "../api/user/userApi";
-import { movieApi } from "../api/movie/movieApi";
+import { userApi } from "./actions/userActions";
+import { movieApi } from "./actions/movieActions";
 
 const store = configureStore({
 	reducer: {
